@@ -31,6 +31,19 @@ uv run pytest                         # тесты описаний тренир
 
 Тренер — скилл `.claude/skills/run-coach`: запусти `claude` в этой папке и скажи «тренер» или «план на неделю».
 
+## Воскресный разбор
+
+Каждое воскресенье в 19:00 планировщик Windows открывает окно и запускает `scripts/weekly-brief.sh`:
+забирает данные Garmin и показывает сводку, дальше — `claude` в этой папке и «тренер».
+Сводка остаётся в `data/weekly/` (не в git). Задача переживает выключенный компьютер:
+пропущенный запуск случится при следующем включении.
+
+```bash
+schtasks.exe /Query /TN "garmin-run weekly" /V /FO LIST   # проверить
+schtasks.exe /Change /TN "garmin-run weekly" /ST 20:00    # другое время
+schtasks.exe /Delete /TN "garmin-run weekly" /F           # снять
+```
+
 ## Как это устроено
 
 - `athlete.yaml` — цель, пульс, темпы и именованные цели шагов (`easy`, `threshold`…).

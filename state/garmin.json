@@ -1,0 +1,42 @@
+{
+  "2026-09-21": {
+    "name": "Лёгкий 45 мин",
+    "ref": "easy-45",
+    "workout_id": 1703083338,
+    "schedule_id": 1782433734,
+    "hash": "863b0f310a64",
+    "lock": false
+  },
+  "2026-09-23": {
+    "name": "Порог 3×8 (дорожка)",
+    "ref": "threshold-3x8-tm",
+    "workout_id": 1703083407,
+    "schedule_id": 1782433802,
+    "hash": "038b51e0c831",
+    "lock": false
+  },
+  "2026-09-24": {
+    "name": "Лёгкий 40 мин",
+    "ref": "easy-40",
+    "workout_id": 1703083412,
+    "schedule_id": 1782433808,
+    "hash": "cffc5de63e46",
+    "lock": false
+  },
+  "2026-09-25": {
+    "name": "Лёгкий 50 + горки (дорожка)",
+    "ref": "easy-50-hills-tm",
+    "workout_id": 1703083424,
+    "schedule_id": 1782433823,
+    "hash": "52170dcff85e",
+    "lock": false
+  },
+  "2026-09-27": {
+    "name": "Длительный 1:40 (дорожка)",
+    "ref": "long-100min-tm",
+    "workout_id": 1703083430,
+    "schedule_id": 1782433828,
+    "hash": "f1a27fa4d3f7",
+    "lock": false
+  }
+}

@@ -1,0 +1,20 @@
+[project]
+name = "garmin-run"
+version = "0.1.0"
+description = "План бега в git, тренировки и измерения — в Garmin Connect"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "garminconnect>=0.3.16",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+garmin-run = "garmin_run.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8"]

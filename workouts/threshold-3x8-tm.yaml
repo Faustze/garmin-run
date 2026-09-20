@@ -1,0 +1,11 @@
+name: Порог 3×8 (дорожка)
+description: >-
+  Скорость задаёт дорожка, не часы — 11.2–11.5 км/ч, уклон 1%.
+  Комфортно тяжело: пара слов даётся, разговор нет. К концу отрезка пульс не выше ~170.
+steps:
+  - warmup: 15min @ easy
+  - repeat: 3
+    steps:
+      - run: {time: 8min, note: "11.2–11.5 км/ч, уклон 1%"}
+      - recover: 2min @ recovery
+  - cooldown: 10min @ recovery

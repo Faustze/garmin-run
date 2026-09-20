@@ -1,0 +1,9 @@
+name: Лёгкий 50 + ускорения
+description: 40 мин легко, затем 6 ускорений по 20 с — быстро и расслабленно, не спринт.
+steps:
+  - run: 40min @ easy
+  - repeat: 6
+    steps:
+      - run: {time: 20s, target: stride, note: быстро и расслабленно}
+      - recover: 60s
+  - cooldown: 3min @ recovery

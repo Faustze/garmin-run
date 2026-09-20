@@ -1,0 +1,9 @@
+name: Порог 3×8 мин
+description: Комфортно тяжело — можно сказать пару слов, но не разговаривать. Пульс не выше ~168.
+steps:
+  - warmup: 15min @ easy
+  - repeat: 3
+    steps:
+      - run: 8min @ threshold
+      - recover: 2min @ recovery
+  - cooldown: 10min @ recovery

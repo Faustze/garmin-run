@@ -31,6 +31,8 @@ echo
 uv run garmin-run status --days 14 | tee "$BRIEF"
 
 echo
+uv run garmin-run dashboard --open || echo "Дашборд собрать не вышло."
+
 echo "Сводка сохранена: $BRIEF"
 echo "Дальше: запусти claude в ~/garmin-run и скажи «тренер» — соберём неделю."
 echo

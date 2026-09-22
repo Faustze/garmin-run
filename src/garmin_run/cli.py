@@ -6,6 +6,7 @@
   show <неделя|файл>     показать неделю, как её увидят часы
   push <неделя> [--apply]  залить неделю в календарь Garmin (без --apply — пробный прогон)
   calendar [ГГГГ-ММ]     что стоит в календаре Garmin на месяц
+  dashboard [--open]     дашборд недели в data/dashboard.html
 """
 
 from __future__ import annotations
@@ -106,6 +107,20 @@ def cmd_calendar(args: argparse.Namespace) -> None:
             print(f"{item.get('date')}  {item.get('itemType'):<8} {item.get('title')}")
 
 
+def cmd_dashboard(args: argparse.Namespace) -> None:
+    from .dashboard import write
+
+    path = write()
+    print(f"Дашборд: {path}")
+    if args.open:
+        import subprocess
+
+        # из WSL открываем в браузере Windows; в обычном Linux — xdg-open
+        win = subprocess.run(["wslpath", "-w", str(path)], capture_output=True, text=True)
+        cmd = ["explorer.exe", win.stdout.strip()] if win.returncode == 0 else ["xdg-open", str(path)]
+        subprocess.run(cmd, check=False)
+
+
 def cmd_login(_: argparse.Namespace) -> None:
     api = login_interactive()
     print(f"Вошёл как {api.get_full_name()}. Токены сохранены, пароль больше не нужен.")
@@ -139,6 +154,10 @@ def main(argv: list[str] | None = None) -> None:
     p = sub.add_parser("calendar")
     p.add_argument("month", nargs="?", help="ГГГГ-ММ")
     p.set_defaults(fn=cmd_calendar)
+
+    p = sub.add_parser("dashboard")
+    p.add_argument("--open", action="store_true", help="открыть в браузере")
+    p.set_defaults(fn=cmd_dashboard)
 
     args = parser.parse_args(argv)
     try:

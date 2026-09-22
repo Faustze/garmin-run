@@ -159,6 +159,18 @@ def garmin_state_rows() -> list[str]:
     ]
 
 
+def signal_rows(activities: list[dict[str, Any]]) -> list[str]:
+    """На последний день с данными — теми же правилами, что в дашборде."""
+    from .signals import fatigue_signals
+
+    daily = {dt.date.fromisoformat(p.stem): _read(p) for p in (DATA / "daily").glob("*.json")}
+    if not daily:
+        return ["нет data/daily — запусти pull"]
+    day = max(daily)
+    found = fatigue_signals(day, daily, activities)
+    return [f"- на {day}: {len(found)}" + (" — " + "; ".join(found) if found else "")]
+
+
 def render(days: int, ahead: int = 7) -> str:
     today = dt.date.today()
     since = today - dt.timedelta(days=days - 1)
@@ -170,6 +182,7 @@ def render(days: int, ahead: int = 7) -> str:
         "", "## План и факт", *activity_rows(recent, state, since, today + dt.timedelta(days=ahead)),
         "", "## Восстановление", *wellness_rows(since),
         "", "## Недели (бег)", *week_rows(activities),
+        "", "## Сигналы усталости", *signal_rows(activities),
         "", "## Garmin", *garmin_state_rows(),
     ]
     return "\n".join(out)

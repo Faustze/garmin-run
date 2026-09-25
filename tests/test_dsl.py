@@ -91,6 +91,20 @@ def test_step_note_and_errors():
             build_workout(bad, ATHLETE)
 
 
+def test_strength_has_sport_and_no_distance():
+    spec = {
+        "name": "Силовая",
+        "sport": "strength",
+        "steps": [{"repeat": 2, "steps": [{"exercise": {"lap": True, "note": "присед"}}, {"rest": "60s"}]}],
+    }
+    w = build_workout(spec, ATHLETE)
+    assert w["sportType"]["sportTypeKey"] == w["workoutSegments"][0]["sportType"]["sportTypeKey"] == "strength_training"
+    assert w["estimatedDistanceInMeters"] == 0
+    assert w["estimatedDurationInSecs"] == 2 * (60 + 60)
+    with pytest.raises(PlanError):
+        build_workout({**spec, "sport": "yoga"}, ATHLETE)
+
+
 def test_fingerprint_depends_on_day():
     w = build_workout({"name": "x", "steps": [{"run": "10min"}]}, ATHLETE)
     assert fingerprint(w, "2026-09-21") != fingerprint(w, "2026-09-22")

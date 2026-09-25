@@ -63,6 +63,11 @@ def is_run(a: dict[str, Any]) -> bool:
     return dig(a, "activityType", "typeKey") in RUN_TYPES
 
 
+def is_strength(a: dict[str, Any]) -> bool:
+    """Силовая с часов или добавленная вручную в Garmin Connect."""
+    return dig(a, "activityType", "typeKey") == "strength_training"
+
+
 def wellness_rows(since: dt.date) -> list[str]:
     rows = [
         "| дата | сон ч | сон балл | HRV ночь | HRV 7д | HRV статус | пульс покоя | BB утро | BB макс | готовность | стресс |",

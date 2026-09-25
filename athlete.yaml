@@ -7,7 +7,9 @@ goal:
   target: "3:50:00"          # 5:27/км
 
 availability:
-  runs_per_week: 5
+  runs_per_week: 4
+  strength_per_week: 1       # с W40: вместо пятой лёгкой пробежки
+  strength_day: thu          # после пороговой (ср), за три дня до длительной (вс)
   long_run_day: sun
   rest_days: [tue, sat]
 

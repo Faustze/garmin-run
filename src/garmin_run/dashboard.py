@@ -20,7 +20,7 @@ from .dsl import PlanError, build_workout
 from .plan import load_week, week_bounds, week_id_for
 from .push import load_state
 from .signals import fatigue_signals
-from .status import WEEKDAYS, _pace, dig, is_run, load_activities
+from .status import WEEKDAYS, _pace, dig, is_run, is_strength, load_activities
 
 OUT = DATA / "dashboard.html"
 EASY_REFS = ("easy", "long", "recovery")
@@ -203,17 +203,20 @@ def spark(title: str, unit: str, points: list[tuple[dt.date, float | None]], *,
 # ── страница ────────────────────────────────────────────────────────────────
 
 def day_cards(start: dt.date, plan: dict[dt.date, dict[str, Any]], state: dict[str, Any],
-              runs_by_day: dict[str, list[dict[str, Any]]], data_until: dt.date | None,
+              sessions_by_day: dict[str, list[dict[str, Any]]], data_until: dt.date | None,
               today: dt.date, easy_max: float) -> str:
     cards = []
     for i in range(7):
         d = start + dt.timedelta(days=i)
         p = plan.get(d) or ({"name": state[d.isoformat()]["name"], "ref": state[d.isoformat()].get("ref", "")}
                             if d.isoformat() in state else None)
-        acts = runs_by_day.get(d.isoformat(), [])
+        acts = sessions_by_day.get(d.isoformat(), [])
         facts = []
         for a in acts:
             hr = a.get("averageHR")
+            if not is_run(a):
+                facts.append(f'<div class="fact-line">{e(str(a.get("activityName") or "силовая"))} · {(a.get("duration") or 0) / 60:.0f} мин</div>')
+                continue
             facts.append(f'<div class="fact-line">{(a.get("distance") or 0) / 1000:.1f} км · {_pace(a.get("averageSpeed"))}/км'
                          f' · пульс {hr:.0f}</div>' if hr else
                          f'<div class="fact-line">{(a.get("distance") or 0) / 1000:.1f} км · {_pace(a.get("averageSpeed"))}/км</div>')
@@ -247,9 +250,10 @@ def render(today: dt.date | None = None) -> str:
     data_until = max(daily) if daily else None
     activities = load_activities(today - dt.timedelta(days=7 * 10))
     runs = [a for a in activities if is_run(a)]
-    runs_by_day: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for a in runs:
-        runs_by_day[a["startTimeLocal"][:10]].append(a)
+    sessions_by_day: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for a in activities:
+        if is_run(a) or is_strength(a):
+            sessions_by_day[a["startTimeLocal"][:10]].append(a)
 
     this_id = week_id_for(today)
     next_id = week_id_for(today + dt.timedelta(days=7))
@@ -334,7 +338,7 @@ def render(today: dt.date | None = None) -> str:
     body = f"""
 <header><h1>Бег · {this_id}</h1><p class="muted">{start:%d.%m}–{week_end:%d.%m} · собрано {today:%d.%m.%Y} · {stamp}</p></header>
 <section class="tiles">{"".join(tiles)}</section>
-<section><h2>Неделя: план и факт</h2>{day_cards(start, this_plan, state, runs_by_day, data_until, today, easy_max)}</section>
+<section><h2>Неделя: план и факт</h2>{day_cards(start, this_plan, state, sessions_by_day, data_until, today, easy_max)}</section>
 <section><h2>Объём по неделям, км</h2>
 <div class="legend"><span><i class="sw fact"></i>факт</span><span><i class="sw plan"></i>план</span></div>
 <div class="scroll">{volume_chart(vol_rows)}</div></section>

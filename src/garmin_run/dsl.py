@@ -9,11 +9,23 @@
         - recover: 2min @ recovery
     - cooldown: 10min
 
-Виды: warmup, run, recover, rest, cooldown, repeat.
+Виды: warmup, run, recover, rest, cooldown, repeat; у силовой ещё exercise.
 Длительность: 45min, 1h10min, 90s, 2min30s. Дистанция: 400m, 1km, 16km.
 lap — до нажатия кнопки круга.
 Цель: имя из athlete.yaml (easy, threshold…), hr:130-150 или pace:5:10-5:20.
 Длинная форма шага: {time|distance|lap, target, note}.
+
+Силовая — `sport: strength` на уровне тренировки и шаг `exercise`:
+
+    sport: strength
+    steps:
+      - repeat: 3
+        steps:
+          - exercise: {lap: true, note: как делать}
+          - rest: 60s
+
+Упражнения не из каталога Garmin: название и техника — в заметке шага.
+Дистанция у силовой нулевая, в объём недели она не идёт.
 """
 
 from __future__ import annotations
@@ -25,11 +37,14 @@ from dataclasses import dataclass
 from typing import Any
 
 RUNNING = {"sportTypeId": 1, "sportTypeKey": "running", "displayOrder": 1}
+STRENGTH = {"sportTypeId": 5, "sportTypeKey": "strength_training", "displayOrder": 5}
+SPORTS = {"running": RUNNING, "strength": STRENGTH}
 
 STEP_TYPES = {
     "warmup": {"stepTypeId": 1, "stepTypeKey": "warmup", "displayOrder": 1},
     "cooldown": {"stepTypeId": 2, "stepTypeKey": "cooldown", "displayOrder": 2},
     "run": {"stepTypeId": 3, "stepTypeKey": "interval", "displayOrder": 3},
+    "exercise": {"stepTypeId": 3, "stepTypeKey": "interval", "displayOrder": 3},
     "recover": {"stepTypeId": 4, "stepTypeKey": "recovery", "displayOrder": 4},
     "rest": {"stepTypeId": 5, "stepTypeKey": "rest", "displayOrder": 5},
 }
@@ -137,9 +152,10 @@ def target_fields(t: Target | None) -> dict[str, Any]:
 
 
 class _Builder:
-    def __init__(self, targets: dict[str, Any], estimate_pace_s: int):
+    def __init__(self, targets: dict[str, Any], estimate_pace_s: int, moving: bool = True):
         self.targets = targets
         self.estimate_pace_s = estimate_pace_s
+        self.moving = moving
         self.order = 0
         self.groups = 0
         self.seconds = 0.0
@@ -228,7 +244,7 @@ class _Builder:
             seconds = value if end_kind == "time" else LAP_ESTIMATE_S
             meters = seconds / pace * 1000
         self.seconds += seconds * mult
-        self.meters += meters * mult
+        self.meters += meters * mult if self.moving else 0
 
 
 def build_workout(spec: dict[str, Any], athlete: dict[str, Any]) -> dict[str, Any]:
@@ -236,14 +252,18 @@ def build_workout(spec: dict[str, Any], athlete: dict[str, Any]) -> dict[str, An
     name = spec.get("name")
     if not name:
         raise PlanError("у тренировки нет name")
-    b = _Builder(athlete.get("targets") or {}, parse_pace(athlete.get("estimate_pace", "6:20")))
+    sport_key = spec.get("sport", "running")
+    if sport_key not in SPORTS:
+        raise PlanError(f"неизвестный sport {sport_key!r}: ожидаю {' или '.join(SPORTS)}")
+    sport = SPORTS[sport_key]
+    b = _Builder(athlete.get("targets") or {}, parse_pace(athlete.get("estimate_pace", "6:20")), sport is RUNNING)
     steps = b.steps(spec.get("steps"))
     workout: dict[str, Any] = {
         "workoutName": name,
-        "sportType": RUNNING,
+        "sportType": sport,
         "estimatedDurationInSecs": round(b.seconds),
         "estimatedDistanceInMeters": round(b.meters),
-        "workoutSegments": [{"segmentOrder": 1, "sportType": RUNNING, "workoutSteps": steps}],
+        "workoutSegments": [{"segmentOrder": 1, "sportType": sport, "workoutSteps": steps}],
     }
     if spec.get("description"):
         workout["description"] = spec["description"].strip()

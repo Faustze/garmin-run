@@ -86,5 +86,45 @@
     "schedule_id": 1788181431,
     "hash": "97f6dae44529",
     "lock": false
+  },
+  "2026-10-05": {
+    "name": "Силовая ноги ~40 мин",
+    "ref": "strength-legs",
+    "workout_id": 1718729068,
+    "schedule_id": 1797857568,
+    "hash": "56060597b469",
+    "lock": false
+  },
+  "2026-10-07": {
+    "name": "Порог 3×8 (дорожка)",
+    "ref": "threshold-3x8-tm",
+    "workout_id": 1718727293,
+    "schedule_id": 1797854664,
+    "hash": "997a66fa09ab",
+    "lock": false
+  },
+  "2026-10-08": {
+    "name": "Лёгкий 55 мин",
+    "ref": "easy-55",
+    "workout_id": 1718729096,
+    "schedule_id": 1797857626,
+    "hash": "c47b2033af96",
+    "lock": false
+  },
+  "2026-10-09": {
+    "name": "Лёгкий 60 + горки (дорожка)",
+    "ref": "easy-60-hills-tm",
+    "workout_id": 1718727325,
+    "schedule_id": 1797854697,
+    "hash": "2cb33baa6bc5",
+    "lock": false
+  },
+  "2026-10-11": {
+    "name": "Длительный 1:45 (дорожка)",
+    "ref": "long-105min-tm",
+    "workout_id": 1718727333,
+    "schedule_id": 1797854706,
+    "hash": "bcde1495bd13",
+    "lock": false
   }
 }

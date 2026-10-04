@@ -9,7 +9,7 @@ goal:
 availability:
   runs_per_week: 4
   strength_per_week: 1       # с W40: вместо пятой лёгкой пробежки
-  strength_day: mon          # с W41: день отдыха до пороговой (ср), шесть дней до длительной (вс); возможно, позже — среда
+  strength_day: mon          # с W41: три дня до пороговой (чт), шесть дней до длительной (вс)
   long_run_day: sun
   rest_days: [tue, sat]
 

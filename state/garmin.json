@@ -96,27 +96,27 @@
     "lock": false
   },
   "2026-10-07": {
-    "name": "Порог 3×8 (дорожка)",
-    "ref": "threshold-3x8-tm",
-    "workout_id": 1718727293,
-    "schedule_id": 1797854664,
-    "hash": "997a66fa09ab",
+    "name": "Лёгкий 60 + горки (дорожка)",
+    "ref": "easy-60-hills-tm",
+    "workout_id": 1718734467,
+    "schedule_id": 1797864727,
+    "hash": "4c13fea4d673",
     "lock": false
   },
   "2026-10-08": {
-    "name": "Лёгкий 55 мин",
-    "ref": "easy-55",
-    "workout_id": 1718729096,
-    "schedule_id": 1797857626,
-    "hash": "c47b2033af96",
+    "name": "Порог 3×8 (дорожка)",
+    "ref": "threshold-3x8-tm",
+    "workout_id": 1718734479,
+    "schedule_id": 1797864735,
+    "hash": "fe07d5c1e40c",
     "lock": false
   },
   "2026-10-09": {
-    "name": "Лёгкий 60 + горки (дорожка)",
-    "ref": "easy-60-hills-tm",
-    "workout_id": 1718727325,
-    "schedule_id": 1797854697,
-    "hash": "2cb33baa6bc5",
+    "name": "Лёгкий 55 мин",
+    "ref": "easy-55",
+    "workout_id": 1718734486,
+    "schedule_id": 1797864748,
+    "hash": "ca9a14c462ba",
     "lock": false
   },
   "2026-10-11": {

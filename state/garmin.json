@@ -119,12 +119,84 @@
     "hash": "ca9a14c462ba",
     "lock": false
   },
+  "2026-10-10": {
+    "name": "Лёгкий 40 мин",
+    "ref": "easy-40",
+    "workout_id": 1724695881,
+    "schedule_id": 1803759373,
+    "hash": "6b0816aeacf3",
+    "lock": false
+  },
   "2026-10-11": {
-    "name": "Длительный 1:45 (дорожка)",
-    "ref": "long-105min-tm",
-    "workout_id": 1718727333,
-    "schedule_id": 1797854706,
-    "hash": "bcde1495bd13",
+    "name": "Длинный 65 мин блоками",
+    "ref": "long-65min-blocks",
+    "workout_id": 1724695897,
+    "schedule_id": 1803759388,
+    "hash": "3618520ec500",
+    "lock": false
+  },
+  "2026-10-12": {
+    "name": "Зал А — ноги ~45 мин",
+    "ref": "strength-legs-a",
+    "workout_id": 1724695920,
+    "schedule_id": 1803759412,
+    "hash": "7d04cb735649",
+    "lock": false
+  },
+  "2026-10-14": {
+    "name": "Лёгкий 45 + горки (дорожка)",
+    "ref": "easy-45-hills-tm",
+    "workout_id": 1724695925,
+    "schedule_id": 1803759415,
+    "hash": "34bad4da2098",
+    "lock": false
+  },
+  "2026-10-16": {
+    "name": "Зал Б — всё тело + 30 мин бега",
+    "ref": "strength-full-b",
+    "workout_id": 1724695927,
+    "schedule_id": 1803759418,
+    "hash": "f4245d883a1e",
+    "lock": false
+  },
+  "2026-10-18": {
+    "name": "Длинный 65 мин блоками",
+    "ref": "long-65min-blocks",
+    "workout_id": 1724695933,
+    "schedule_id": 1803759428,
+    "hash": "c7abfd2df90c",
+    "lock": false
+  },
+  "2026-10-19": {
+    "name": "Длинный 65 мин блоками",
+    "ref": "long-65min-blocks",
+    "workout_id": 1733532036,
+    "schedule_id": 1812551813,
+    "hash": "de6e11df6c29",
+    "lock": false
+  },
+  "2026-10-21": {
+    "name": "Зал А — ноги ~45 мин",
+    "ref": "strength-legs-a",
+    "workout_id": 1733535916,
+    "schedule_id": 1812555667,
+    "hash": "e2840b0607bd",
+    "lock": false
+  },
+  "2026-10-23": {
+    "name": "Зал Б — всё тело + 45–50 мин бега",
+    "ref": "strength-full-b-run45",
+    "workout_id": 1733535941,
+    "schedule_id": 1812555687,
+    "hash": "043b12114b3f",
+    "lock": false
+  },
+  "2026-10-25": {
+    "name": "Длинный 65 мин блоками",
+    "ref": "long-65min-blocks",
+    "workout_id": 1733535951,
+    "schedule_id": 1812555702,
+    "hash": "2df28d17e2f7",
     "lock": false
   }
 }
